@@ -52,6 +52,10 @@ public class RouteInfoManager {
     private final HashMap<String/* topic */, List<QueueData>> topicQueueTable;
     private final HashMap<String/* brokerName */, BrokerData> brokerAddrTable;
     private final HashMap<String/* clusterName */, Set<String/* brokerName */>> clusterAddrTable;
+    /**
+     * broker状态信息，每次心跳会更新信息，broker启动后及每30秒向所有nameserver发送心跳包，会更新该table，nameserver
+     * 每隔10秒扫描table，连续120秒没收到心跳包，移除路由，关闭socket连接
+     */
     private final HashMap<String/* brokerAddr */, BrokerLiveInfo> brokerLiveTable;
     private final HashMap<String/* brokerAddr */, List<String>/* Filter Server */> filterServerTable;
 

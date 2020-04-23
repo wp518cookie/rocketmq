@@ -40,6 +40,10 @@ public class ThreadLocalIndex {
         return index;
     }
 
+    public int get() {
+        return this.threadLocalIndex.get() == null ? -1 : this.threadLocalIndex.get();
+    }
+
     @Override
     public String toString() {
         return "ThreadLocalIndex{" +

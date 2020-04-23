@@ -18,16 +18,24 @@ package org.apache.rocketmq.client.impl.producer;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.common.ThreadLocalIndex;
 import org.apache.rocketmq.common.message.MessageQueue;
 import org.apache.rocketmq.common.protocol.route.QueueData;
 import org.apache.rocketmq.common.protocol.route.TopicRouteData;
 
+@Slf4j
 public class TopicPublishInfo {
+    // 顺序消息
     private boolean orderTopic = false;
+    // 是否有topic的路由信息
     private boolean haveTopicRouterInfo = false;
+    // messageQueue的列表
     private List<MessageQueue> messageQueueList = new ArrayList<MessageQueue>();
+    // 线程私有的index
     private volatile ThreadLocalIndex sendWhichQueue = new ThreadLocalIndex();
+    //
     private TopicRouteData topicRouteData;
 
     public boolean isOrderTopic() {
@@ -87,6 +95,7 @@ public class TopicPublishInfo {
     public MessageQueue selectOneMessageQueue() {
         int index = this.sendWhichQueue.getAndIncrement();
         int pos = Math.abs(index) % this.messageQueueList.size();
+        log.info("current index:{}, size:{}, pos:{}", index, this.messageQueueList.size(), pos);
         if (pos < 0)
             pos = 0;
         return this.messageQueueList.get(pos);

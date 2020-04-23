@@ -31,7 +31,9 @@ public class MessageStoreConfig {
         + File.separator + "commitlog";
 
     // CommitLog file size,default is 1G
-    private int mappedFileSizeCommitLog = 1024 * 1024 * 1024;
+    // todo 方便调试弄小点
+//    private int mappedFileSizeCommitLog = 1024 * 1024 * 1024;
+    private int mappedFileSizeCommitLog = 512;
     // ConsumeQueue file size,default is 30W
     private int mappedFileSizeConsumeQueue = 300000 * ConsumeQueue.CQ_STORE_UNIT_SIZE;
     // enable consume queue ext
